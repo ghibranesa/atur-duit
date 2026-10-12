@@ -321,6 +321,118 @@
         /* ── Pagination ───────────────────────────────────────────── */
         #historyPagination button { background: #e8f3ec !important; border-color: #c8e0d2 !important; }
         #historyPagination button:hover { background: #d8ece2 !important; }
+
+        /* ══════════════════════════════════════════════════════════════
+           BOTTOM NAV — mobile fintech style
+        ══════════════════════════════════════════════════════════════ */
+
+        /* Hide desktop nav on mobile, show bottom nav */
+        @media (max-width: 767px) {
+            #desktopNav { display: none !important; }
+            #bottomNav  { display: flex !important; }
+
+            /* Give body breathing room so content isn't hidden behind nav */
+            body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important; }
+        }
+
+        /* Hide bottom nav on desktop, show desktop nav */
+        @media (min-width: 768px) {
+            #desktopNav { display: flex !important; }
+            #bottomNav  { display: none !important; }
+        }
+
+        /* Bottom nav container */
+        #bottomNav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: #ffffff;
+            border-top: 1px solid #c8e0d2;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            box-shadow: 0 -4px 24px rgba(13,92,71,.08);
+            /* flex set via media query */
+            align-items: stretch;
+            justify-content: stretch;
+        }
+
+        /* Each tab button */
+        .bn-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 4px 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #8aaa9a;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 600;
+            transition: color 0.15s;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        .bn-btn svg { width: 22px; height: 22px; stroke-width: 1.75; transition: transform 0.15s; }
+        .bn-btn:active svg { transform: scale(0.88); }
+
+        /* Active state */
+        .bn-btn.bn-active {
+            color: #0f7a5f;
+        }
+        .bn-btn.bn-active svg {
+            stroke: #0f7a5f;
+        }
+
+        /* Active indicator dot */
+        .bn-btn.bn-active::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: #0f7a5f;
+        }
+
+        /* Desktop nav pill style */
+        #desktopNav {
+            background: #ffffff;
+            border: 1px solid #c8e0d2;
+            border-radius: 14px;
+            padding: 6px;
+            gap: 4px;
+            box-shadow: 0 1px 6px rgba(13,92,71,.05);
+        }
+        #desktopNav button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #5a7a6a;
+            transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+        #desktopNav button svg { width: 16px; height: 16px; stroke-width: 2; }
+        #desktopNav button:hover {
+            background: #e8f3ec;
+            color: #0d1e14;
+        }
+        #desktopNav button.nav-active {
+            background: #0f7a5f !important;
+            color: #fff !important;
+        }
+        #desktopNav button.nav-active svg { stroke: #fff; }
     </style>
 </head>
 <body class="bg-dark-900 text-slate-200 min-h-screen p-3 sm:p-5 md:p-8 antialiased selection:bg-emerald-500/20 relative">
@@ -490,21 +602,45 @@
             </div>
         </header>
 
-        <!-- Main Navigation Bar -->
-        <nav class="flex overflow-x-auto gap-2 bg-dark-800 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold no-scrollbar">
-            <button id="navBtnPlanner" onclick="switchMainTab('planner')" class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-indigo-600 text-white transition-all whitespace-nowrap nav-active">
-                <i data-lucide="sliders" class="w-4 h-4"></i> 1. Rencana Keuangan
+        <!-- Desktop Navigation (hidden on mobile) -->
+        <nav id="desktopNav">
+            <button id="navBtnPlanner" onclick="switchMainTab('planner')" class="nav-active">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Rencana Keuangan
             </button>
-            <button id="navBtnForm" onclick="switchMainTab('form')" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition-all whitespace-nowrap">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i> 2. Catat Pengeluaran
+            <button id="navBtnForm" onclick="switchMainTab('form')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                Catat Pengeluaran
             </button>
-            <button id="navBtnVariance" onclick="switchMainTab('variance')" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition-all whitespace-nowrap">
-                <i data-lucide="bar-chart-3" class="w-4 h-4"></i> 3. Rencana vs Kenyataan
+            <button id="navBtnVariance" onclick="switchMainTab('variance')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                Rencana vs Kenyataan
             </button>
-            <button id="navBtnHistory" onclick="switchMainTab('history')" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition-all whitespace-nowrap">
-                <i data-lucide="receipt" class="w-4 h-4"></i> 4. Riwayat Transaksi
+            <button id="navBtnHistory" onclick="switchMainTab('history')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+                Riwayat
             </button>
         </nav>
+
+        <!-- Bottom Navigation (mobile only, fixed) -->
+        <div id="bottomNav">
+            <button class="bn-btn bn-active" id="bnBtnPlanner" onclick="switchMainTab('planner')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                Rencana
+            </button>
+            <button class="bn-btn" id="bnBtnForm" onclick="switchMainTab('form')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                Catat
+            </button>
+            <button class="bn-btn" id="bnBtnVariance" onclick="switchMainTab('variance')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                Analisis
+            </button>
+            <button class="bn-btn" id="bnBtnHistory" onclick="switchMainTab('history')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+                Riwayat
+            </button>
+        </div>
 
         <!-- VIEW 1: PLANNER -->
         <div id="viewPlanner" class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
@@ -1006,22 +1142,36 @@
 
         function switchMainTab(tab) {
             const views = ['Planner', 'Form', 'Variance', 'History'];
+
+            // Reset semua view dan desktop nav
             views.forEach(v => {
                 document.getElementById('view' + v).classList.add('hidden');
                 const btn = document.getElementById('navBtn' + v);
-                btn.className = "flex items-center gap-2 px-4 py-2.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition-all whitespace-nowrap";
-                btn.classList.remove('nav-active');
+                if (btn) btn.classList.remove('nav-active');
             });
 
+            // Reset bottom nav
+            ['Planner','Form','Variance','History'].forEach(v => {
+                const bn = document.getElementById('bnBtn' + v);
+                if (bn) bn.classList.remove('bn-active');
+            });
+
+            // Aktifkan view yang dipilih
             const activeCap = tab.charAt(0).toUpperCase() + tab.slice(1);
             document.getElementById('view' + activeCap).classList.remove('hidden');
+
+            // Aktifkan desktop nav button
             const activeBtn = document.getElementById('navBtn' + activeCap);
-            activeBtn.className = "flex items-center gap-2 px-4 py-2.5 rounded-lg text-white transition-all whitespace-nowrap nav-active";
+            if (activeBtn) activeBtn.classList.add('nav-active');
+
+            // Aktifkan bottom nav button
+            const activeBn = document.getElementById('bnBtn' + activeCap);
+            if (activeBn) activeBn.classList.add('bn-active');
 
             if (tab === 'form') populateCategoryDropdowns();
             if (tab === 'variance') renderVarianceTable();
             if (tab === 'history') { renderHistoryTable(); renderMonthlyChart(); }
-            
+
             lucide.createIcons();
         }
 
