@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════════════════════
+   AturDuit — Shared Design System · Light Mode
+   Clean fintech vibes: white cards, teal accent, mint bg
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Core palette — light mint base */
+  --bg-base:       #f0f7f3;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #f7fdfb;
+  --bg-input:      #f0f7f3;
+  --border:        #c8e0d2;
+  --border-focus:  #12a87f;
+
+  /* Accent — teal (primary brand) */
+  --teal-600:   #0d5c47;
+  --teal-500:   #0f7a5f;
+  --teal-400:   #12a87f;
+  --teal-300:   #2dcfa0;
+  --teal-100:   #d0f5eb;
+
+  /* Text */
+  --text-primary:   #0d1e14;
+  --text-secondary: #3d5e4e;
+  --text-muted:     #7a9e8c;
+
+  /* Status colors */
+  --green:  #10b981;
+  --red:    #ef4444;
+  --amber:  #f59e0b;
+  --indigo: #6366f1;
+  --blue:   #3b82f6;
+
+  /* Typography */
+  --font: 'DM Sans', sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 70% 50% at 0% 0%, rgba(13,92,71,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(45,207,160,0.05) 0%, transparent 55%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Cards ────────────────────────────────────────────────── */
+.ad-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 6px rgba(13, 92, 71, 0.06);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--teal-500);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+}
+.btn-primary:hover  { background: var(--teal-400); }
+.btn-primary:active { transform: scale(0.98); }
+
+/* ── Toast animation ──────────────────────────────────────── */
+@keyframes toastIn {
+  from { transform: translateY(-16px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0)     scale(1);    opacity: 1; }
+}
+.animate-toast { animation: toastIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ── Shared inputs ────────────────────────────────────────── */
+.ad-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ad-input:focus { border-color: var(--teal-500); }
+
+/* ── Fade-in on load ──────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease forwards; }
+.fade-up-delay-1 { animation: fadeUp 0.5s 0.1s ease both; }
+.fade-up-delay-2 { animation: fadeUp 0.5s 0.2s ease both; }
+.fade-up-delay-3 { animation: fadeUp 0.5s 0.35s ease both; }
+
+/* ── Glassmorphism teal card (landing hero) ───────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 224, 210, 0.9);
+  border-radius: var(--radius-xl);
+}
+
+/* ── "Credit card" style widget — stays dark ─────────────── */
+.balance-card {
+  background: linear-gradient(135deg, #0d5c47 0%, #0a3d2e 60%, #061e17 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(45, 207, 160, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(45,207,160,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Chart container ──────────────────────────────────────── */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Budget amount inline input (app) ────────────────────── */
+.budget-amount-input {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 7px;
+  color: var(--teal-500);
+  font-weight: 600;
+  font-size: 12px;
+  text-align: right;
+  width: 130px;
+  transition: border-color 0.15s;
+  outline: none;
+  font-family: var(--font);
+}
+.budget-amount-input:focus   { border-color: var(--teal-500); color: var(--text-primary); }
+.budget-amount-input:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Mobile table min-width ───────────────────────────────── */
+.mobile-table      { min-width: 480px; }
+.mobile-table-wide { min-width: 560px; }
+
+@media (max-width: 640px) {
+  .touch-target { min-height: 40px; }
+  input[type="date"], input[type="month"] { min-height: 38px; }
+}
