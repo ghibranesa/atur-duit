@@ -19,7 +19,190 @@
     <meta name="theme-color" content="#f0f7f3">
 
     <!-- Shared design system -->
-    <link rel="stylesheet" href="style.css">
+    <style id="shared-design-system">
+/* ═══════════════════════════════════════════════════════════
+   AturDuit — Shared Design System · Light Mode
+   Clean fintech vibes: white cards, teal accent, mint bg
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  /* Core palette — light mint base */
+  --bg-base:       #f0f7f3;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #f7fdfb;
+  --bg-input:      #f0f7f3;
+  --border:        #c8e0d2;
+  --border-focus:  #12a87f;
+
+  /* Accent — teal (primary brand) */
+  --teal-600:   #0d5c47;
+  --teal-500:   #0f7a5f;
+  --teal-400:   #12a87f;
+  --teal-300:   #2dcfa0;
+  --teal-100:   #d0f5eb;
+
+  /* Text */
+  --text-primary:   #0d1e14;
+  --text-secondary: #3d5e4e;
+  --text-muted:     #7a9e8c;
+
+  /* Status colors */
+  --green:  #10b981;
+  --red:    #ef4444;
+  --amber:  #f59e0b;
+  --indigo: #6366f1;
+  --blue:   #3b82f6;
+
+  /* Typography */
+  --font: 'DM Sans', sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 0% 0%, rgba(13,92,71,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 65% at 100% 100%, rgba(45,207,160,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 30%, rgba(45,207,160,0.04) 0%, transparent 60%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Cards — glassmorphism ────────────────────────────────── */
+.ad-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid rgba(200, 224, 210, 0.60);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 4px 24px rgba(13, 92, 71, 0.07),
+    0 1px 4px rgba(13, 92, 71, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--teal-500);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.12s;
+}
+.btn-primary:hover  { background: var(--teal-400); }
+.btn-primary:active { transform: scale(0.98); }
+
+/* ── Toast animation ──────────────────────────────────────── */
+@keyframes toastIn {
+  from { transform: translateY(-16px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0)     scale(1);    opacity: 1; }
+}
+.animate-toast { animation: toastIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ── Shared inputs ────────────────────────────────────────── */
+.ad-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ad-input:focus { border-color: var(--teal-500); }
+
+/* ── Fade-in on load ──────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.5s ease forwards; }
+.fade-up-delay-1 { animation: fadeUp 0.5s 0.1s ease both; }
+.fade-up-delay-2 { animation: fadeUp 0.5s 0.2s ease both; }
+.fade-up-delay-3 { animation: fadeUp 0.5s 0.35s ease both; }
+
+/* ── Glassmorphism teal card (landing hero) ───────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(200, 224, 210, 0.65);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 8px 32px rgba(13, 92, 71, 0.09),
+    0 2px 8px rgba(13, 92, 71, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+/* ── "Credit card" style widget — stays dark ─────────────── */
+.balance-card {
+  background: linear-gradient(135deg, #0d5c47 0%, #0a3d2e 60%, #061e17 100%);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(45, 207, 160, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(45,207,160,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Chart container ──────────────────────────────────────── */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Budget amount inline input (app) ────────────────────── */
+.budget-amount-input {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 7px;
+  color: var(--teal-500);
+  font-weight: 600;
+  font-size: 12px;
+  text-align: right;
+  width: 130px;
+  transition: border-color 0.15s;
+  outline: none;
+  font-family: var(--font);
+}
+.budget-amount-input:focus   { border-color: var(--teal-500); color: var(--text-primary); }
+.budget-amount-input:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Mobile table min-width ───────────────────────────────── */
+.mobile-table      { min-width: 480px; }
+.mobile-table-wide { min-width: 560px; }
+
+@media (max-width: 640px) {
+  .touch-target { min-height: 40px; }
+  input[type="date"], input[type="month"] { min-height: 38px; }
+}
+
+    </style>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="AturDuit">
 
@@ -65,10 +248,11 @@
         /* Base */
         body {
             font-family: 'DM Sans', sans-serif;
-            background: #f0f7f3 !important;
+            background: #e8f5ee !important;
             background-image:
-                radial-gradient(ellipse 60% 40% at 0% 0%, rgba(13,92,71,.07) 0%, transparent 55%),
-                radial-gradient(ellipse 50% 55% at 100% 100%, rgba(45,207,160,.05) 0%, transparent 55%) !important;
+                radial-gradient(ellipse 65% 50% at 0% 0%, rgba(13,92,71,.11) 0%, transparent 55%),
+                radial-gradient(ellipse 55% 65% at 100% 100%, rgba(45,207,160,.09) 0%, transparent 55%),
+                radial-gradient(ellipse 45% 40% at 55% 25%, rgba(45,207,160,.05) 0%, transparent 60%) !important;
             color: #0d1e14 !important;
         }
 
@@ -177,16 +361,21 @@
             border-color: rgba(15,122,95,.25) !important;
         }
 
-        /* ── Header card ──────────────────────────────────────────── */
+        /* ── Header card — glassmorphism ─────────────────────────── */
         header.bg-dark-800 {
-            background: #ffffff !important;
-            box-shadow: 0 1px 8px rgba(13,92,71,.06) !important;
+            background: rgba(255, 255, 255, 0.78) !important;
+            backdrop-filter: blur(20px) saturate(1.6) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(1.6) !important;
+            border-bottom: 1px solid rgba(200, 224, 210, 0.55) !important;
+            box-shadow: 0 2px 20px rgba(13, 92, 71, 0.06), inset 0 1px 0 rgba(255,255,255,0.95) !important;
         }
 
-        /* ── Main Nav bar ─────────────────────────────────────────── */
+        /* ── Main Nav bar — glassmorphism ─────────────────────────── */
         nav.bg-dark-800 {
-            background: #ffffff !important;
-            box-shadow: 0 1px 6px rgba(13,92,71,.05) !important;
+            background: rgba(255, 255, 255, 0.78) !important;
+            backdrop-filter: blur(16px) saturate(1.5) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(1.5) !important;
+            box-shadow: 0 2px 16px rgba(13, 92, 71, 0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
         }
         nav button:not(.nav-active) {
             color: #5a7a6a !important;
@@ -196,16 +385,37 @@
             color: #0d1e14 !important;
         }
 
-        /* ── Right panel cards ────────────────────────────────────── */
+        /* ── Right panel cards — glassmorphism ───────────────────── */
         #rightPanel .bg-dark-800 {
-            box-shadow: 0 1px 8px rgba(13,92,71,.06) !important;
+            background: rgba(255, 255, 255, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(1.4) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+            border: 1px solid rgba(200, 224, 210, 0.6) !important;
+            box-shadow: 0 4px 24px rgba(13, 92, 71, 0.07), inset 0 1px 0 rgba(255,255,255,0.85) !important;
         }
 
-        /* ── Modal styling for light bg ──────────────────────────── */
+        /* ── General .bg-dark-800 cards — glassmorphism ──────────── */
+        .bg-dark-800 {
+            background: rgba(255, 255, 255, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(1.4) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(1.4) !important;
+        }
+
+        /* ── History chart glass ──────────────────────────────────── */
+        #historyChartWrap {
+            background: rgba(255, 255, 255, 0.75) !important;
+            backdrop-filter: blur(16px) !important;
+            -webkit-backdrop-filter: blur(16px) !important;
+        }
+
+        /* ── Modal styling — glass panels ────────────────────────── */
         #manualModal > div,
         #qrisModal > div {
-            background: #ffffff !important;
-            border-color: #c8e0d2 !important;
+            background: rgba(255, 255, 255, 0.88) !important;
+            backdrop-filter: blur(24px) saturate(1.6) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+            border: 1px solid rgba(200, 224, 210, 0.65) !important;
+            box-shadow: 0 20px 60px rgba(13, 30, 20, 0.15) !important;
         }
         #manualModal .border-b { border-color: #c8e0d2 !important; }
         #manualModal hr { border-color: #c8e0d2 !important; }
@@ -323,7 +533,7 @@
         #historyPagination button:hover { background: #d8ece2 !important; }
 
         /* ══════════════════════════════════════════════════════════════
-           BOTTOM NAV — mobile fintech style
+           BOTTOM NAV — glassmorphism floating pill style
         ══════════════════════════════════════════════════════════════ */
 
         /* Hide desktop nav on mobile, show bottom nav */
@@ -331,8 +541,8 @@
             #desktopNav { display: none !important; }
             #bottomNav  { display: flex !important; }
 
-            /* Give body breathing room so content isn't hidden behind nav */
-            body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important; }
+            /* Give body breathing room so content isn't hidden behind floating nav */
+            body { padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important; }
         }
 
         /* Hide bottom nav on desktop, show desktop nav */
@@ -341,20 +551,29 @@
             #bottomNav  { display: none !important; }
         }
 
-        /* Bottom nav container */
+        /* Bottom nav container — floating glass pill */
         #bottomNav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 420px;
             z-index: 40;
-            background: #ffffff;
-            border-top: 1px solid #c8e0d2;
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-            box-shadow: 0 -4px 24px rgba(13,92,71,.08);
-            /* flex set via media query */
-            align-items: stretch;
-            justify-content: stretch;
+            /* Glassmorphism */
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px) saturate(1.6);
+            -webkit-backdrop-filter: blur(20px) saturate(1.6);
+            border: 1px solid rgba(200, 224, 210, 0.65);
+            border-radius: 28px;
+            box-shadow:
+                0 8px 32px rgba(13, 92, 71, 0.10),
+                0 2px 8px rgba(13, 92, 71, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            padding: 6px 8px;
+            align-items: center;
+            justify-content: space-around;
+            gap: 4px;
         }
 
         /* Each tab button */
@@ -364,48 +583,69 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            padding: 10px 4px 8px;
+            gap: 3px;
+            padding: 8px 6px 7px;
             background: none;
             border: none;
             cursor: pointer;
-            color: #8aaa9a;
+            color: #7a9e8c;
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.62rem;
+            font-size: 0.58rem;
             font-weight: 600;
-            transition: color 0.15s;
+            letter-spacing: 0.01em;
+            transition: color 0.2s, transform 0.15s;
             -webkit-tap-highlight-color: transparent;
             position: relative;
+            border-radius: 20px;
         }
-        .bn-btn svg { width: 22px; height: 22px; stroke-width: 1.75; transition: transform 0.15s; }
+        .bn-btn svg {
+            width: 20px; height: 20px;
+            stroke-width: 1.75;
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bn-btn:active { transform: scale(0.92); }
         .bn-btn:active svg { transform: scale(0.88); }
 
-        /* Active state */
+        /* Active state — glass pill highlight */
         .bn-btn.bn-active {
             color: #0f7a5f;
+            background: rgba(15, 122, 95, 0.10);
         }
         .bn-btn.bn-active svg {
             stroke: #0f7a5f;
+            transform: scale(1.08);
         }
 
-        /* Active indicator dot */
+        /* Active indicator — small dot under icon */
         .bn-btn.bn-active::after {
             content: '';
             position: absolute;
-            top: 6px;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 4px; height: 4px;
             border-radius: 50%;
             background: #0f7a5f;
         }
 
-        /* Desktop nav pill style */
+        /* Label text for active tab */
+        .bn-btn.bn-active .bn-label {
+            color: #0f7a5f;
+            font-weight: 700;
+        }
+
+        /* Desktop nav pill style — glassmorphism */
         #desktopNav {
-            background: #ffffff;
-            border: 1px solid #c8e0d2;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px) saturate(1.5);
+            -webkit-backdrop-filter: blur(16px) saturate(1.5);
+            border: 1px solid rgba(200, 224, 210, 0.7);
             border-radius: 14px;
             padding: 6px;
             gap: 4px;
-            box-shadow: 0 1px 6px rgba(13,92,71,.05);
+            box-shadow:
+                0 4px 20px rgba(13, 92, 71, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
         }
         #desktopNav button {
             display: flex;
@@ -425,12 +665,13 @@
         }
         #desktopNav button svg { width: 16px; height: 16px; stroke-width: 2; }
         #desktopNav button:hover {
-            background: #e8f3ec;
+            background: rgba(15, 122, 95, 0.08);
             color: #0d1e14;
         }
         #desktopNav button.nav-active {
             background: #0f7a5f !important;
             color: #fff !important;
+            box-shadow: 0 2px 10px rgba(15, 122, 95, 0.3);
         }
         #desktopNav button.nav-active svg { stroke: #fff; }
     </style>
@@ -626,19 +867,19 @@
         <div id="bottomNav">
             <button class="bn-btn bn-active" id="bnBtnPlanner" onclick="switchMainTab('planner')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-                Rencana
+                <span class="bn-label">Rencana</span>
             </button>
             <button class="bn-btn" id="bnBtnForm" onclick="switchMainTab('form')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-                Catat
+                <span class="bn-label">Catat</span>
             </button>
             <button class="bn-btn" id="bnBtnVariance" onclick="switchMainTab('variance')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-                Analisis
+                <span class="bn-label">Analisis</span>
             </button>
             <button class="bn-btn" id="bnBtnHistory" onclick="switchMainTab('history')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-                Riwayat
+                <span class="bn-label">Riwayat</span>
             </button>
         </div>
 
