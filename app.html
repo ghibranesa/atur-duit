@@ -1628,16 +1628,32 @@ body {
 
             // ── Update banking card progress bar ──────────────────
             try {
-                const _pct = totalPlannedFromItems > 0
-                    ? Math.min(100, Math.round(totalSpentThisMonth / totalPlannedFromItems * 100))
+                const _rawPct = totalPlannedFromItems > 0
+                    ? (totalSpentThisMonth / totalPlannedFromItems * 100)
                     : 0;
+                const _cappedPct = Math.min(100, _rawPct);
                 const _pb = document.getElementById('varianceProgressBar');
                 const _pp = document.getElementById('varianceSpentPercent');
                 if (_pb) {
-                    _pb.style.width = _pct + '%';
-                    _pb.style.background = _pct >= 100 ? '#ef4444' : _pct >= 80 ? '#f59e0b' : '#2dcfa0';
+                    // Bar: pakai lebar minimum 2% supaya keliatan ada isinya kalau udah ada pengeluaran
+                    const _barWidth = totalSpentThisMonth > 0 ? Math.max(2, _cappedPct) : 0;
+                    _pb.style.width = _barWidth + '%';
+                    _pb.style.background = _cappedPct >= 100 ? '#ef4444' : _cappedPct >= 80 ? '#f59e0b' : '#2dcfa0';
                 }
-                if (_pp) _pp.textContent = _pct + '%';
+                if (_pp) {
+                    // Teks: tampilkan persentase asli (1 desimal kalau < 10%), bukan dibulatkan ke 0
+                    let _displayPct;
+                    if (totalSpentThisMonth === 0) {
+                        _displayPct = '0%';
+                    } else if (_cappedPct < 1) {
+                        _displayPct = '<1%';
+                    } else if (_cappedPct < 10) {
+                        _displayPct = _cappedPct.toFixed(1) + '%';
+                    } else {
+                        _displayPct = Math.round(_cappedPct) + '%';
+                    }
+                    _pp.textContent = _displayPct;
+                }
             } catch(_e) {}
             // ─────────────────────────────────────────────────────
 
