@@ -195,7 +195,14 @@ body {
 
 /* ── Mobile table min-width ───────────────────────────────── */
 .mobile-table      { min-width: 480px; }
-.mobile-table-wide { min-width: 560px; }
+.mobile-table-wide { min-width: 620px; }
+
+/* ── Variance table column widths ────────────────────────── */
+.vt-col-pos      { width: 38%; }
+.vt-col-rencana  { width: 17%; white-space: nowrap; }
+.vt-col-real     { width: 17%; white-space: nowrap; }
+.vt-col-sisa     { width: 16%; white-space: nowrap; }
+.vt-col-status   { width: 12%; white-space: nowrap; }
 
 @media (max-width: 640px) {
   .touch-target { min-height: 40px; }
@@ -1034,6 +1041,13 @@ body {
 
                 <div class="overflow-x-auto -mx-1 px-1">
                     <table class="w-full text-left text-xs text-slate-300 mobile-table-wide">
+                        <colgroup>
+                            <col class="vt-col-pos">
+                            <col class="vt-col-rencana">
+                            <col class="vt-col-real">
+                            <col class="vt-col-sisa">
+                            <col class="vt-col-status">
+                        </colgroup>
                         <thead class="bg-dark-900 text-slate-400 font-semibold border-b border-slate-800">
                             <tr>
                                 <th class="p-3 whitespace-nowrap">Pos Pengeluaran</th>
@@ -1588,14 +1602,14 @@ body {
                     const tr = document.createElement('tr');
                     tr.className = 'hover:bg-dark-900/40 transition-all';
                     
-                    let statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Aman</span>';
-                    let remainingClass = "font-semibold text-emerald-400";
+                    let statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">Aman</span>';
+                    let remainingClass = "font-semibold text-emerald-400 whitespace-nowrap";
 
                     if (remaining < 0) {
-                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400 border border-red-500/20">Jebol</span>';
-                        remainingClass = "font-semibold text-red-400";
+                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-red-500/10 text-red-400 border border-red-500/20 whitespace-nowrap">Jebol</span>';
+                        remainingClass = "font-semibold text-red-400 whitespace-nowrap";
                     } else if (remaining === 0 && planValue > 0) {
-                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Pas Limit</span>';
+                        statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20 whitespace-nowrap">Limit</span>';
                     }
 
                     tr.innerHTML = `
@@ -1603,10 +1617,10 @@ body {
                             <div class="font-medium text-slate-200">${item.name}</div>
                             <div class="text-[10px] text-slate-500">${cat.title}</div>
                         </td>
-                        <td class="p-3 font-medium text-slate-300">${formatIDR(planValue)}</td>
-                        <td class="p-3 font-medium text-indigo-400">${formatIDR(actualSpent)}</td>
+                        <td class="p-3 font-medium text-slate-300 whitespace-nowrap">${formatIDR(planValue)}</td>
+                        <td class="p-3 font-medium text-indigo-400 whitespace-nowrap">${formatIDR(actualSpent)}</td>
                         <td class="p-3 ${remainingClass}">${formatIDR(remaining)}</td>
-                        <td class="p-3 text-center">${statusBadge}</td>
+                        <td class="p-3 text-center whitespace-nowrap">${statusBadge}</td>
                     `;
                     tbody.appendChild(tr);
                 });
